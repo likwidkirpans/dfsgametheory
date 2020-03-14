@@ -31,4 +31,7 @@ class CSVImporter:
             'min_deviation': cls._parse_exposure(row.get('Min Deviation')),
             'max_deviation': cls._parse_exposure(row.get('Max Deviation')),
             'is_confirmed_starter': bool(row.get('Confirmed Starter')),
+            'expected_success': cls._parse_exposure(row.get('Expected Success')),
+            'expected_failure': cls._parse_exposure(row.get('Expected Failure')),
+            'expected_value': cls._parse_exposure(row.get('Expected Value')),
         }

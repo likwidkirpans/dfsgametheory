@@ -35,8 +35,24 @@ class Lineup:
         return round(sum(player.fppg for player in self.players), 3)
 
     @property
+    def projected_ownership(self) -> float:
+        return round(sum(player.projected_ownership for player in self.players)*100, 3)
+
+    @property
     def salary_costs(self) -> int:
         return sum(player.salary for player in self.players)
 
     def get_unswappable_players(self) -> List[LineupPlayer]:
         return [player for player in self.players if player.is_game_started]
+
+    @property
+    def expected_success(self) -> float:
+        return round(sum(player.expected_success for player in self.players)*100, 3)
+
+    @property
+    def expected_failure(self) -> float:
+        return round(sum(player.expected_failure for player in self.players)*100, 3)
+
+    @property
+    def expected_value(self) -> float:
+        return round(sum(player.expected_value for player in self.players), 2)

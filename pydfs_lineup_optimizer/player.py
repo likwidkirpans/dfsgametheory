@@ -27,6 +27,9 @@ class Player:
                  min_deviation: Optional[float] = None,
                  max_deviation: Optional[float] = None,
                  is_confirmed_starter: Optional[bool] = None,
+                 expected_success: Optional[float] = None,
+                 expected_failure: Optional[float] = None,
+                 expected_value: Optional[float] = None,
                  ):
         self.id = player_id
         self.first_name = first_name
@@ -52,6 +55,10 @@ class Player:
         self.max_deviation = max_deviation
         self.projected_ownership = projected_ownership
         self.is_confirmed_starter = is_confirmed_starter
+        self._expected_success = expected_success
+        self._expected_failure = expected_failure
+        self._expected_value = expected_value
+
 
     def __repr__(self):
         return '%s %s (%s)' % (self.full_name, '/'.join(self.positions), self.team)
@@ -117,7 +124,26 @@ class Player:
             if starts_at and time_now > starts_at:
                 return True
         return False
+    
+    @property
+    def expected_success(self) -> Optional[float]:
+        return self._expected_success
 
+    @expected_success.setter
+    def expected_success(self, expected_success: Optional[float]):
+        self._expected_success = process_percents(expected_success)
+
+    @property
+    def expected_failure(self) -> Optional[float]:
+        return self._expected_failure
+
+    @expected_failure.setter
+    def expected_failure(self, expected_failure: Optional[float]):
+        self._expected_failure = process_percents(expected_failure)
+
+    @property
+    def expected_value(self) -> Optional[float]:
+        return self._expected_value
 
 class LineupPlayer:
     __slots__ = ['_player', 'lineup_position']

@@ -22,15 +22,19 @@ class LineupExporter:
 class CSVLineupExporter(LineupExporter):
     def export(self, filename, render_func=None):
         with open(filename, 'w') as csvfile:
-            lineup_writer = csv.writer(csvfile, delimiter=',')
+            lineup_writer = csv.writer(csvfile, delimiter=',', lineterminator = '\n')
             for index, lineup in enumerate(self.lineups):
                 if index == 0:
                     header = [player.lineup_position for player in lineup.lineup]
-                    header.extend(('Budget', 'FPPG'))
+                    header.extend(('Budget', 'FPPG', 'Sum Projected Ownership', 'Sum Expected Success', 'Sum Expected Failure', 'Sum Expected Value'))
                     lineup_writer.writerow(header)
                 row = [(render_func or self.render_player)(player) for player in lineup.lineup]
                 row.append(str(lineup.salary_costs))
                 row.append(str(lineup.fantasy_points_projection))
+                row.append(str(lineup.projected_ownership))
+                row.append(str(lineup.expected_success))
+                row.append(str(lineup.expected_failure))
+                row.append(str(lineup.expected_value))
                 lineup_writer.writerow(row)
 
 
